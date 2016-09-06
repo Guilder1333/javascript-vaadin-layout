@@ -12,6 +12,10 @@ import org.vaadin.plugin.client.ui.JavaScriptLayoutState;
 public abstract class AbstractJavaScriptLayout extends AbstractLayout {
     private JavaScriptCallbackHelper callbackHelper = new JavaScriptCallbackHelper(this);
 
+    public AbstractJavaScriptLayout() {
+
+    }
+
     @Override
     protected <T extends ServerRpc> void registerRpc(T implementation,
                                                      Class<T> rpcInterfaceType) {

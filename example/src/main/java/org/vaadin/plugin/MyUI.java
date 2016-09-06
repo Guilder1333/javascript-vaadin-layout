@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
@@ -20,11 +21,14 @@ import com.vaadin.ui.VerticalLayout;
  * overridden to add component to the user interface and initialize non-component functionality.
  */
 @Theme("mytheme")
+@Widgetset("org.vaadin.plugin.Widgetset")
 public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
+        final TestLayout layout = new TestLayout();
+        layout.setWidth("800px");
+        layout.setHeight("600px");
         
         final TextField name = new TextField();
         name.setCaption("Type your name here:");
@@ -36,8 +40,6 @@ public class MyUI extends UI {
         });
         
         layout.addComponents(name, button);
-        layout.setMargin(true);
-        layout.setSpacing(true);
         
         setContent(layout);
     }

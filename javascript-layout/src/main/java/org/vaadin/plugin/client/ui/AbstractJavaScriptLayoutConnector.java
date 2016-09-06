@@ -5,12 +5,13 @@ import com.vaadin.client.ConnectorHierarchyChangeEvent;
 import com.vaadin.client.JavaScriptConnectorHelper;
 import com.vaadin.client.communication.HasJavaScriptConnectorHelper;
 import com.vaadin.client.ui.AbstractLayoutConnector;
-import com.vaadin.client.ui.JavaScriptWidget;
-import com.vaadin.shared.ui.JavaScriptComponentState;
+import com.vaadin.shared.ui.Connect;
+import org.vaadin.plugin.AbstractJavaScriptLayout;
 
 /**
  * Created by Alexander on 05.09.2016.
  */
+@Connect(AbstractJavaScriptLayout.class)
 public class AbstractJavaScriptLayoutConnector extends AbstractLayoutConnector implements HasJavaScriptConnectorHelper {
 
     private final JavaScriptLayoutConnectorHelper helper = new JavaScriptLayoutConnectorHelper(this) {

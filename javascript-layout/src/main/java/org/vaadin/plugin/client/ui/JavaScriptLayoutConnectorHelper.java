@@ -43,7 +43,7 @@ public class JavaScriptLayoutConnectorHelper extends JavaScriptConnectorHelper {
     }
 
     protected void extendConnectorWrapper(JavaScriptObject connectorWrapper) {
-        extendLayoutMethods(connectorWrapper);
+        extendLayoutMethods(this, connectorWrapper);
     }
 
     public void onConnectorHierarchyChange() {
@@ -68,8 +68,10 @@ public class JavaScriptLayoutConnectorHelper extends JavaScriptConnectorHelper {
             Icon icon = connector.getConnection().getIcon(iconUrlString);
 
             JsArrayString styles = JavaScriptObject.createArray().cast();
-            for (String style : connector.getState().styles) {
-                styles.push(style);
+            if (connector.getState().styles != null) {
+                for (String style : connector.getState().styles) {
+                    styles.push(style);
+                }
             }
             String error = connector.getState().errorMessage;
             boolean showError = error != null;
@@ -96,13 +98,13 @@ public class JavaScriptLayoutConnectorHelper extends JavaScriptConnectorHelper {
                     required,
                     connector.isEnabled(), connector.getState().captionAsHtml);
             JavaScriptObject connectorWrapper = getConnectorWrapper();
-            invokeIfPresent(connectorWrapper, "updateCaption", captionWrapper);
+            invokeIfPresent(connectorWrapper, "updateCaption");
         }
     }
 
     private JsArray<JavaScriptObject> getChildComponents() {
         List<ComponentConnector> childComponents = connector.getChildComponents();
-        JsArray<JavaScriptObject> array = JavaScriptObject.createArray(childComponents.size()).cast();
+        JsArray<JavaScriptObject> array = JavaScriptObject.createArray().cast();
         for (ComponentConnector cc : childComponents) {
             array.push(createWidgetWrapper(cc, cc.getWidget(), cc.getConnectorId(), cc.getWidget().getElement()));
         }
@@ -117,7 +119,7 @@ public class JavaScriptLayoutConnectorHelper extends JavaScriptConnectorHelper {
         connector.getWidget().orphanWidget(widget);
     }
 
-    private static native void extendLayoutMethods(JavaScriptObject wrapper) /*-{
+    private static native void extendLayoutMethods(JavaScriptLayoutConnectorHelper h, JavaScriptObject wrapper) /*-{
         wrapper['getChildComponents'] = function() {
             return h.@org.vaadin.plugin.client.ui.JavaScriptLayoutConnectorHelper::getChildComponents()();
         };
@@ -132,7 +134,7 @@ public class JavaScriptLayoutConnectorHelper extends JavaScriptConnectorHelper {
     }-*/;
 
     private static native void invokeIfPresent(
-            JavaScriptObject connectorWrapper, String functionName, Object... arguments)
+            JavaScriptObject connectorWrapper, String functionName)
     /*-{
         if (typeof connectorWrapper[functionName] == 'function') {
             connectorWrapper[functionName].apply(connectorWrapper, arguments);
