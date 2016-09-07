@@ -91,14 +91,14 @@ public class JavaScriptLayoutConnectorHelper extends JavaScriptConnectorHelper {
                     connector,
                     connector.getConnectorId(),
                     connector.getState().caption,
-                    icon.getElement(),
+                    icon == null ? null : icon.getElement(),
                     styles,
                     error,
                     showError,
                     required,
                     connector.isEnabled(), connector.getState().captionAsHtml);
             JavaScriptObject connectorWrapper = getConnectorWrapper();
-            invokeIfPresent(connectorWrapper, "updateCaption");
+            invokeIfPresent(connectorWrapper, "updateCaption", captionWrapper);
         }
     }
 
@@ -134,7 +134,7 @@ public class JavaScriptLayoutConnectorHelper extends JavaScriptConnectorHelper {
     }-*/;
 
     private static native void invokeIfPresent(
-            JavaScriptObject connectorWrapper, String functionName)
+            JavaScriptObject connectorWrapper, String functionName, Object... arguments)
     /*-{
         if (typeof connectorWrapper[functionName] == 'function') {
             connectorWrapper[functionName].apply(connectorWrapper, arguments);

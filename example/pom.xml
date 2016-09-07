@@ -66,9 +66,8 @@
                     <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                     <webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
                     <draftCompile>false</draftCompile>
-                    <compileReport>false</compileReport>
+                    <compileReport>true</compileReport>
                     <style>DETAILED</style>
-                    <strict>true</strict>
                 </configuration>
                 <executions>
                     <execution>

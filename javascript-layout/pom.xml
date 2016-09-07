@@ -11,6 +11,10 @@
 
     <artifactId>javascript-layout</artifactId>
 
+    <properties>
+        <package-path>org/vaadin/plugin</package-path>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -21,4 +25,56 @@
             <artifactId>vaadin-client</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <mode>development</mode>
+                            <url>${project.url}</url>
+                            <Vaadin-Package-Version>1</Vaadin-Package-Version>
+                            <Implementation-Title>JavaScript Layout</Implementation-Title>
+                            <Implementation-Version>1.0</Implementation-Version>
+                            <Vaadin-Widgetsets>org.vaadin.plugin.JavaScriptLayoutWidgetSet</Vaadin-Widgetsets>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/${package-path}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/${package-path}</directory>
+                                    <includes>
+                                        <include>client/**/*.java</include>
+                                        <include>**/*.gwt.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

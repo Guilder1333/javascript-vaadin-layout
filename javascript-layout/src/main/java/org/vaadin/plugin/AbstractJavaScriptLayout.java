@@ -10,7 +10,7 @@ import org.vaadin.plugin.client.ui.JavaScriptLayoutState;
  * Created by Alexander on 05.09.2016.
  */
 public abstract class AbstractJavaScriptLayout extends AbstractLayout {
-    private JavaScriptCallbackHelper callbackHelper = new JavaScriptCallbackHelper(this);
+    private final JavaScriptCallbackHelper callbackHelper = new JavaScriptCallbackHelper(this);
 
     public AbstractJavaScriptLayout() {
 
